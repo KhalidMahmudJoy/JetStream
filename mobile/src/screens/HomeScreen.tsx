@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, spacing, borderRadius, typography } from '../theme';
 import { useAppSelector } from '../store';
+import { AnimatedCard, MusicCard, NeonButton } from '../components';
 
 const { width } = Dimensions.get('window');
 
@@ -49,19 +50,21 @@ export default function HomeScreen() {
         </View>
 
         {/* Quick Play Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick Play</Text>
-          <View style={styles.quickPlayGrid}>
-            {mockQuickPlay.map((item) => (
-              <TouchableOpacity key={item.id} style={styles.quickPlayItem}>
-                <Image source={{ uri: item.image }} style={styles.quickPlayImage} />
-                <Text style={styles.quickPlayTitle} numberOfLines={1}>
-                  {item.title}
-                </Text>
-              </TouchableOpacity>
-            ))}
+        <AnimatedCard delay={0}>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Quick Play</Text>
+            <View style={styles.quickPlayGrid}>
+              {mockQuickPlay.map((item) => (
+                <TouchableOpacity key={item.id} style={styles.quickPlayItem}>
+                  <Image source={{ uri: item.image }} style={styles.quickPlayImage} />
+                  <Text style={styles.quickPlayTitle} numberOfLines={1}>
+                    {item.title}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        </View>
+        </AnimatedCard>
 
         {/* Recently Played */}
         <View style={styles.section}>
@@ -71,32 +74,25 @@ export default function HomeScreen() {
               <Text style={styles.seeAll}>See all</Text>
             </TouchableOpacity>
           </View>
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.horizontalScroll}
-          >
-            {mockTracks.map((track) => (
-              <TouchableOpacity key={track.id} style={styles.trackCard}>
-                <View style={styles.trackImageContainer}>
-                  <Image source={{ uri: track.image }} style={styles.trackImage} />
-                  <LinearGradient
-                    colors={['transparent', 'rgba(10, 14, 39, 0.8)']}
-                    style={styles.trackGradient}
-                  />
-                  <TouchableOpacity style={styles.playButton}>
-                    <Ionicons name="play" size={20} color={colors.background.primary} />
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.trackTitle} numberOfLines={1}>
-                  {track.title}
-                </Text>
-                <Text style={styles.trackArtist} numberOfLines={1}>
-                  {track.artist}
-                </Text>
-              </TouchableOpacity>
+          <View style={styles.trackList}>
+            {mockTracks.map((track, index) => (
+              <AnimatedCard key={track.id} delay={index * 100}>
+                <MusicCard
+                  track={{
+                    id: track.id,
+                    title: track.title,
+                    artist: track.artist,
+                    albumArt: track.image,
+                    duration: 225, // 3:45 in seconds
+                  }}
+                  isPlaying={false}
+                  onPress={() => console.log('Play:', track.title)}
+                  onPlay={() => console.log('Play button:', track.title)}
+                  onLike={() => console.log('Liked:', track.title)}
+                />
+              </AnimatedCard>
             ))}
-          </ScrollView>
+          </View>
         </View>
 
         {/* AI Recommendations */}
@@ -345,5 +341,9 @@ const styles = StyleSheet.create({
   },
   bottomSpacer: {
     height: 80,
+  },
+  trackList: {
+    paddingHorizontal: spacing.md,
+    gap: spacing.sm,
   },
 });
