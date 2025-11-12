@@ -1,8 +1,8 @@
-# ?? JetStream Music Player - Version 1.0
+# 🎵 JetStream Music Player - Version 2.0 (In Development)
 
 **Modern Web-Based Music Streaming Application**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.0.0--dev-orange)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://reactjs.org/)
@@ -10,12 +10,11 @@
 
 ---
 
-## ?? Table of Contents
+## 📑 Table of Contents
 
 - [Overview](#-overview)
 - [Features](#-features)
 - [Quick Start](#-quick-start)
-- [Screenshots](#-screenshots)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
 - [What's Implemented](#-whats-implemented)
@@ -28,26 +27,26 @@
 
 ---
 
-## ?? Overview
+## 🌟 Overview
 
 **JetStream** is a Progressive Web Application (PWA) that delivers a seamless music streaming experience with a stunning glassmorphism UI, advanced audio controls, and intelligent caching features.
 
-**Version 1.0** focuses on establishing a robust web foundation with plans for mobile apps and backend integration in Version 2.0.
+**Version 2.0** is currently in development, adding mobile applications, backend infrastructure, user authentication, and real lyrics integration. See [V2_ROADMAP.md](V2_ROADMAP.md) for details.
 
 ### Why JetStream?
 
-- ?? **Beautiful UI** - Modern glassmorphism design with smooth animations
-- ? **Fast & Responsive** - Optimized for all devices
-- ?? **Rich Features** - Playlists, visualizer, lyrics, and more
-- ?? **Easy Setup** - One-click installation for testers
-- ?? **PWA Ready** - Install on desktop or mobile
-- ?? **Free & Open Source** - MIT Licensed
+- 🎨 **Beautiful UI** - Modern glassmorphism design with smooth animations
+- ⚡ **Fast & Responsive** - Optimized for all devices
+- 🎵 **Rich Features** - Playlists, visualizer, lyrics, and more
+- 🚀 **Easy Setup** - One-click installation for testers
+- 📱 **PWA Ready** - Install on desktop or mobile
+- 🆓 **Free & Open Source** - MIT Licensed
 
 ---
 
-## ? Features
+## ✨ Features
 
-### ?? Music & Audio
+### 🎵 Music & Audio
 
 - **Search Engine** - Search millions of songs via Deezer API
 - **Audio Playback** - High-quality streaming (30-second previews)
@@ -55,7 +54,7 @@
 - **Lyrics Display** - Demo lyrics panel (real lyrics coming in V2)
 - **Queue Management** - Add songs to queue and reorder
 
-### ??? Playback Controls
+### 🎛️ Playback Controls
 
 - **Full Controls** - Play, pause, skip forward/backward
 - **Volume Control** - Smooth volume slider with mute
@@ -63,14 +62,14 @@
 - **Repeat Modes** - None, repeat one, repeat all
 - **Shuffle** - Randomize playback order
 
-### ?? Playlists
+### 📝 Playlists
 
 - **Create Playlists** - Unlimited custom playlists
 - **Manage Songs** - Add, remove, reorder tracks
 - **Edit Playlists** - Rename and customize
 - **Persistent Storage** - Saved in browser localStorage
 
-### ?? User Interface
+### 🎨 User Interface
 
 - **Glassmorphism Design** - Translucent glass-effect components
 - **Dark Theme** - Beautiful gradients optimized for viewing
@@ -78,7 +77,7 @@
 - **Smooth Animations** - Fluid transitions and hover effects
 - **Interactive Cards** - Dynamic song and album displays
 
-### ? Performance
+### ⚡ Performance
 
 - **API Caching** - 24-hour cache for faster searches
 - **Offline Indicator** - Shows connection status
@@ -88,7 +87,7 @@
 
 ---
 
-## ?? Quick Start
+## 🚀 Quick Start
 
 ### For Testers (Windows - Easy Method)
 
@@ -100,22 +99,22 @@
    - Install with default settings
 
 2. **Run Setup** (First time only)
-   - Double-click **\setup.bat\**
+   - Double-click **`setup.bat`**
    - Wait 2-5 minutes for dependencies
 
 3. **Start Application**
-   - Double-click **\start.bat\**
-   - Browser opens automatically at \http://localhost:5173\
+   - Double-click **`start.bat`**
+   - Browser opens automatically at `http://localhost:5173`
 
-**That's it!** ??
+**That's it!** 🎉
 
-?? **Need help?** See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions and troubleshooting.
+💡 **Need help?** See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions and troubleshooting.
 
 ### For Developers (Manual Setup)
 
-\\\ash
+```bash
 # Clone repository
-git clone <your-repo-url>
+git clone https://github.com/ShahriarKhan016/Project-JetStream-Final.git
 cd "Project JetStream"
 
 # Install dependencies
@@ -126,31 +125,11 @@ npm install
 npm run dev
 
 # Open http://localhost:5173 in browser
-\\\
+```
 
 ---
 
-## ?? Screenshots
-
-### Home Page
-![Home](docs/screenshots/home.png)
-*Beautiful glassmorphism UI with featured content*
-
-### Now Playing
-![Player](docs/screenshots/player.png)
-*Full-featured audio player with visualizer*
-
-### Playlists
-![Playlists](docs/screenshots/playlists.png)
-*Easy playlist management*
-
-### Mobile View
-![Mobile](docs/screenshots/mobile.png)
-*Fully responsive design*
-
----
-
-## ??? Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
 - **Framework**: React 18.2
@@ -172,66 +151,66 @@ npm run dev
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 
-\\\
+```
 JetStream/
-+-- web/                          # Web application
-�   +-- src/
-�   �   +-- components/          # React components
-�   �   �   +-- GlassPlayer.tsx
-�   �   �   +-- AudioVisualizer.tsx
-�   �   �   +-- LyricsPanel.tsx
-�   �   �   +-- ...
-�   �   +-- pages/               # Page components
-�   �   �   +-- Home.tsx
-�   �   �   +-- Search.tsx
-�   �   �   +-- Library.tsx
-�   �   �   +-- Settings.tsx
-�   �   +-- services/            # API services
-�   �   �   +-- deezer.service.ts
-�   �   �   +-- lyrics.service.ts
-�   �   �   +-- apiCache.service.ts
-�   �   +-- store/               # Redux store
-�   �   +-- router/              # Routing config
-�   �   +-- main.tsx             # Entry point
-�   +-- public/
-�   �   +-- manifest.json        # PWA manifest
-�   �   +-- sw.js                # Service worker
-�   +-- package.json
-+-- shared/                       # Shared types & theme
-+-- docs/                         # Documentation
-+-- setup.bat                     # Windows setup script
-+-- start.bat                     # Windows start script
-+-- README.md                     # This file
-+-- SETUP_GUIDE.md                # Installation guide
-+-- CONTRIBUTING.md               # Contribution guidelines
-+-- CHANGELOG.md                  # Version history
-+-- LICENSE                       # MIT License
-\\\
+├── web/                          # Web application
+│   ├── src/
+│   │   ├── components/          # React components
+│   │   │   ├── GlassPlayer.tsx
+│   │   │   ├── AudioVisualizer.tsx
+│   │   │   ├── LyricsPanel.tsx
+│   │   │   └── ...
+│   │   ├── pages/               # Page components
+│   │   │   ├── Home.tsx
+│   │   │   ├── Search.tsx
+│   │   │   ├── Library.tsx
+│   │   │   └── Settings.tsx
+│   │   ├── services/            # API services
+│   │   │   ├── deezer.service.ts
+│   │   │   ├── lyrics.service.ts
+│   │   │   └── apiCache.service.ts
+│   │   ├── store/               # Redux store
+│   │   ├── router/              # Routing config
+│   │   └── main.tsx             # Entry point
+│   ├── public/
+│   │   ├── manifest.json        # PWA manifest
+│   │   └── sw.js                # Service worker
+│   └── package.json
+├── shared/                       # Shared types & theme
+├── docs/                         # Documentation
+├── setup.bat                     # Windows setup script
+├── start.bat                     # Windows start script
+├── README.md                     # This file
+├── SETUP_GUIDE.md                # Installation guide
+├── CONTRIBUTING.md               # Contribution guidelines
+├── CHANGELOG.md                  # Version history
+└── LICENSE                       # MIT License
+```
 
 ---
 
-## ?? What's Implemented
+## ✅ What's Implemented
 
-### ? Fully Working (Version 1.0)
+### ✨ Fully Working (Version 1.0)
 
-- ? Music search and discovery
-- ? Audio playback (30s previews)
-- ? Playlist creation and management
-- ? Audio frequency visualizer
-- ? Lyrics panel (demo mode)
-- ? Responsive UI (all screen sizes)
-- ? API response caching
-- ? PWA capabilities
-- ? Settings and preferences
-- ? Offline indicator
-- ? Keyboard shortcuts
-- ? Volume control
-- ? Progress tracking
-- ? Repeat and shuffle modes
+- ✅ Music search and discovery
+- ✅ Audio playback (30s previews)
+- ✅ Playlist creation and management
+- ✅ Audio frequency visualizer
+- ✅ Lyrics panel (demo mode)
+- ✅ Responsive UI (all screen sizes)
+- ✅ API response caching
+- ✅ PWA capabilities
+- ✅ Settings and preferences
+- ✅ Offline indicator
+- ✅ Keyboard shortcuts
+- ✅ Volume control
+- ✅ Progress tracking
+- ✅ Repeat and shuffle modes
 
-### ?? Known Limitations (V1)
+### ⚠️ Known Limitations (V1)
 
 1. **Audio Playback**
    - Limited to 30-second previews (Deezer API restriction)
@@ -258,9 +237,9 @@ JetStream/
 
 ---
 
-## ?? Version Roadmap
+## 🗺️ Version Roadmap
 
-### Version 1.0 - Current Release ?
+### Version 1.0 - Current Release ✅
 *Released: November 2025*
 
 **Focus**: Web application with core features
@@ -271,7 +250,7 @@ JetStream/
 - Caching system
 - Responsive design
 
-### Version 2.0 - Planned (Q1-Q2 2026) ??
+### Version 2.0 - Planned (Q1-Q2 2026) 🚀
 
 **Mobile Applications**
 - React Native iOS app
@@ -298,7 +277,7 @@ JetStream/
 - Sleep timer
 - Podcast support
 
-### Version 3.0 - Future (2026+) ??
+### Version 3.0 - Future (2026+) 🌟
 
 - Desktop applications (Electron)
 - AI music discovery
@@ -310,7 +289,7 @@ JetStream/
 
 ---
 
-## ?? Testing
+## 🧪 Testing
 
 ### Manual Testing Checklist
 
@@ -352,10 +331,10 @@ JetStream/
 ### Browser Compatibility
 
 Tested and working on:
-- ? Chrome 120+ (Recommended)
-- ? Firefox 121+
-- ? Edge 120+
-- ? Safari 17+
+- ✅ Chrome 120+ (Recommended)
+- ✅ Firefox 121+
+- ✅ Edge 120+
+- ✅ Safari 17+
 
 ### Reporting Bugs
 
@@ -366,7 +345,7 @@ Found a bug? Please report it!
 2. What happened (with screenshots)
 3. What you expected
 4. Browser and OS version
-5. Console errors (F12 ? Console)
+5. Console errors (F12 → Console)
 
 **Report via:**
 - GitHub Issues (preferred)
@@ -374,23 +353,23 @@ Found a bug? Please report it!
 
 ---
 
-## ?? Contributing
+## 🤝 Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Quick Contribution Guide
 
 1. Fork the repository
-2. Create feature branch: \git checkout -b feature/your-feature\
+2. Create feature branch: `git checkout -b feature/your-feature`
 3. Make your changes
 4. Test thoroughly
-5. Commit: \git commit -m "Add: your feature"\
-6. Push: \git push origin feature/your-feature\
+5. Commit: `git commit -m "Add: your feature"`
+6. Push: `git push origin feature/your-feature`
 7. Create Pull Request
 
 ### Development Workflow
 
-\\\ash
+```bash
 # Setup development environment
 cd web
 npm install
@@ -399,11 +378,11 @@ npm run dev
 # Make changes
 # Test locally
 # Commit and push
-\\\
+```
 
 ---
 
-## ?? Team
+## 👥 Team
 
 **Development Team**
 - [Your Name] - Lead Developer
@@ -419,7 +398,7 @@ npm run dev
 
 ---
 
-## ?? License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -427,19 +406,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## ?? Support
+## 💬 Support
 
 Need help? We're here!
 
-- ?? **Documentation**: Check [SETUP_GUIDE.md](SETUP_GUIDE.md)
-- ?? **Bug Reports**: Create a GitHub Issue
-- ?? **Feature Requests**: Create a GitHub Issue with \enhancement\ label
-- ?? **Email**: [your-email@example.com]
-- ?? **Discussion**: GitHub Discussions tab
+- 📖 **Documentation**: Check [SETUP_GUIDE.md](SETUP_GUIDE.md)
+- 🐛 **Bug Reports**: Create a GitHub Issue
+- 💡 **Feature Requests**: Create a GitHub Issue with `enhancement` label
+- 📧 **Email**: Contact the development team
+- 💬 **Discussion**: GitHub Discussions tab
 
 ---
 
-## ?? Acknowledgments
+## 🙏 Acknowledgments
 
 - **Deezer API** - Music catalog and streaming
 - **React Team** - Amazing framework
@@ -449,7 +428,7 @@ Need help? We're here!
 
 ---
 
-## ?? Additional Resources
+## 📚 Additional Resources
 
 - [Setup Guide](SETUP_GUIDE.md) - Detailed installation instructions
 - [Contributing Guide](CONTRIBUTING.md) - How to contribute
@@ -461,10 +440,10 @@ Need help? We're here!
 
 <div align="center">
 
-**Made with ?? by the JetStream Team**
+**Made with ❤️ by the JetStream Team**
 
-?? **Enjoy JetStream Music Player!** ??
+🎵 **Enjoy JetStream Music Player!** 🎵
 
-[? Back to Top](#-jetstream-music-player---version-10)
+[⬆️ Back to Top](#-jetstream-music-player---version-10)
 
 </div>

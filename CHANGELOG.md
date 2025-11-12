@@ -93,40 +93,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased] - Version 2.0 (Planned)
+## [Unreleased] - Version 2.0 (In Development)
 
-### Planned Features
+**Branch**: `version-2.0-dev`  
+**Status**: 🔨 Active Development  
+**Target**: Q1-Q2 2026
 
-#### Mobile Applications
-- React Native iOS app
-- React Native Android app
-- Native audio playback
-- Push notifications
-- Offline downloads
+### 🚀 In Progress
 
-#### Backend & Authentication
-- Node.js/Express backend API
-- User authentication with JWT
-- User profiles
-- Cloud-synced playlists
-- Social features (share, follow)
-- Recommendations engine
+#### Phase 1: Backend Foundation (Current)
+- [ ] Node.js/Express backend API setup
+- [ ] PostgreSQL database integration
+- [ ] User authentication with JWT
+- [ ] User registration and login endpoints
+- [ ] Password hashing and security
+- [ ] Database migrations setup
 
-#### Enhanced Features
-- Real lyrics integration
-- Lyrics highlighting/karaoke mode
-- Crossfade between songs
-- Equalizer controls
-- Podcast support
-- Radio stations
-- Sleep timer
-- Chromecast support
+#### Phase 2: Web App Integration (Next)
+- [ ] Connect frontend to backend API
+- [ ] Implement authentication flow
+- [ ] Cloud-synced playlists
+- [ ] User profile management
+- [ ] Real lyrics integration via proxy
+- [ ] Offline mode improvements
 
-#### Performance Improvements
-- Server-side rendering
-- Improved caching strategies
-- CDN integration
-- Optimized bundle size
+#### Phase 3: Mobile Applications
+- [ ] React Native iOS app
+- [ ] React Native Android app
+- [ ] Native audio playback
+- [ ] Background audio support
+- [ ] Push notifications
+- [ ] Offline song downloads
+- [ ] Lock screen controls
+
+#### Phase 4: Enhanced Features
+- [ ] Real lyrics with synchronization
+- [ ] Lyrics highlighting (karaoke mode)
+- [ ] Audio equalizer (10-band)
+- [ ] Crossfade between songs
+- [ ] AI-powered recommendations
+- [ ] Sleep timer
+- [ ] Gapless playback
+- [ ] Podcast support
+
+#### Phase 5: Social Features
+- [ ] User profiles (public/private)
+- [ ] Follow/unfollow users
+- [ ] Share songs and playlists
+- [ ] Collaborative playlists
+- [ ] Activity feed
+- [ ] Comments on playlists
+
+### Technical Improvements
+- [ ] Docker containerization
+- [ ] CI/CD pipeline (GitHub Actions)
+- [ ] Redis caching layer
+- [ ] Error tracking (Sentry)
+- [ ] Performance monitoring
+- [ ] API documentation (Swagger)
+- [ ] Comprehensive testing (unit, integration, E2E)
 
 ---
 
