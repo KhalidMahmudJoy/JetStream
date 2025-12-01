@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom'
 import { deezerService } from '../services/deezer.service'
 import styles from './HomePage.module.css'
 
+// Quick picks configuration
+// 'Liked Songs' links to library, others search for their title
 const quickPicksPlaylists = [
-  { id: '1', title: 'Liked Songs', image: 'https://i.pravatar.cc/400?img=1', color: '#1DB954' },
-  { id: '2', title: 'Chill Mix', image: 'https://i.pravatar.cc/400?img=2', color: '#2D9CDB' },
-  { id: '3', title: 'Workout', image: 'https://i.pravatar.cc/400?img=3', color: '#00D4FF' },
-  { id: '4', title: 'Focus Flow', image: 'https://i.pravatar.cc/400?img=4', color: '#1DD1A1' },
-  { id: '5', title: 'Party Hits', image: 'https://i.pravatar.cc/400?img=5', color: '#00B8D4' },
-  { id: '6', title: 'Sleep Sounds', image: 'https://i.pravatar.cc/400?img=6', color: '#0097A7' }
+  { id: '1', title: 'Liked Songs', image: 'https://i.pravatar.cc/400?img=1', color: '#1DB954', link: '/library?tab=liked' },
+  { id: '2', title: 'Chill Mix', image: 'https://i.pravatar.cc/400?img=2', color: '#2D9CDB', searchQuery: 'chill relaxing music' },
+  { id: '3', title: 'Workout', image: 'https://i.pravatar.cc/400?img=3', color: '#00D4FF', searchQuery: 'workout gym motivation' },
+  { id: '4', title: 'Focus Flow', image: 'https://i.pravatar.cc/400?img=4', color: '#1DD1A1', searchQuery: 'focus concentration study' },
+  { id: '5', title: 'Party Hits', image: 'https://i.pravatar.cc/400?img=5', color: '#00B8D4', searchQuery: 'party dance hits' },
+  { id: '6', title: 'Sleep Sounds', image: 'https://i.pravatar.cc/400?img=6', color: '#0097A7', searchQuery: 'sleep ambient relaxation' }
 ]
 
 interface Album {
@@ -158,7 +160,11 @@ function HomePage() {
 
       <motion.section className={styles.quickPicks} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
         {quickPicksPlaylists.map((item, index) => (
-          <Link key={item.id} to={`/search?q=${encodeURIComponent(item.title)}`} style={{ textDecoration: 'none' }}>
+          <Link 
+            key={item.id} 
+            to={item.link || `/search?q=${encodeURIComponent(item.searchQuery || item.title)}`} 
+            style={{ textDecoration: 'none' }}
+          >
             <motion.div
               className={styles.quickPickCard}
               initial={{ opacity: 0, y: 20 }}

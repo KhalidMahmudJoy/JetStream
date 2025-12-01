@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Music, Heart, ListMusic, Clock, Play, Trash2, Plus, X, ArrowUpDown } from 'lucide-react'
 import { storageService, Track, Playlist } from '../services/storage.service'
 import { usePlayer } from '../contexts/PlayerContext'
@@ -12,7 +12,18 @@ type SortType = 'dateAdded' | 'title' | 'artist' | 'duration'
 
 function LibraryPage() {
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<TabType>('liked')
+  const [searchParams] = useSearchParams()
+  
+  // Get initial tab from URL parameter or default to 'liked'
+  const getInitialTab = (): TabType => {
+    const tabParam = searchParams.get('tab')
+    if (tabParam === 'liked' || tabParam === 'playlists' || tabParam === 'recent') {
+      return tabParam
+    }
+    return 'liked'
+  }
+  
+  const [activeTab, setActiveTab] = useState<TabType>(getInitialTab())
   const [likedSongs, setLikedSongs] = useState<Track[]>([])
   const [playlists, setPlaylists] = useState<Playlist[]>([])
   const [recentlyPlayed, setRecentlyPlayed] = useState<Track[]>([])
@@ -33,6 +44,14 @@ function LibraryPage() {
   useEffect(() => {
     loadData()
   }, [])
+
+  // Update tab when URL parameter changes
+  useEffect(() => {
+    const tabParam = searchParams.get('tab')
+    if (tabParam === 'liked' || tabParam === 'playlists' || tabParam === 'recent') {
+      setActiveTab(tabParam)
+    }
+  }, [searchParams])
 
   const tabs = [
     { id: 'liked' as TabType, label: 'Liked Songs', icon: Heart, count: likedSongs.length },
