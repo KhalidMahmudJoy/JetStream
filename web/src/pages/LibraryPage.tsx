@@ -310,7 +310,7 @@ function LibraryPage() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               <div className={styles.modalHeader}>
                 <h2>Create Playlist</h2>

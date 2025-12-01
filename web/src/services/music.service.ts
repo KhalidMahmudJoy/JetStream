@@ -9,7 +9,8 @@
  */
 
 import { deezerService } from './deezer.service'
-import { youtubeService } from './youtube.service'
+// YouTube service is disabled - using Deezer 30s previews
+// import { youtubeService } from './youtube.service'
 
 interface CachedAudio {
   trackId: string
@@ -38,7 +39,7 @@ class MusicService {
    * Get full audio URL for a track
    * DISABLED - Using Deezer 30s previews for reliability
    */
-  async getFullAudioUrl(trackId: string, title: string, artist: string): Promise<string | null> {
+  async getFullAudioUrl(_trackId: string, title: string, artist: string): Promise<string | null> {
     // Full audio extraction disabled - always return null to use Deezer preview
     console.log(`ℹ️ Using Deezer 30s preview for: ${artist} - ${title}`)
     return null

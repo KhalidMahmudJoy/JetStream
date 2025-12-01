@@ -20,18 +20,19 @@ const INVIDIOUS_INSTANCES = [
   'https://invidious.snopyta.org'
 ]
 
-interface YouTubeSearchResult {
-  id: { videoId: string }
-  snippet: {
-    title: string
-    channelTitle: string
-    thumbnails: {
-      default: { url: string }
-      medium: { url: string }
-      high: { url: string }
-    }
-  }
-}
+// YouTubeSearchResult interface - kept for reference
+// interface YouTubeSearchResult {
+//   id: { videoId: string }
+//   snippet: {
+//     title: string
+//     channelTitle: string
+//     thumbnails: {
+//       default: { url: string }
+//       medium: { url: string }
+//       high: { url: string }
+//     }
+//   }
+// }
 
 class YouTubeService {
   private useInvidious = !YOUTUBE_API_KEY || YOUTUBE_API_KEY.trim() === ''
@@ -179,7 +180,7 @@ class YouTubeService {
    * Get audio stream URL - DISABLED (using Deezer 30s previews instead)
    * Full audio extraction is complex and unreliable
    */
-  async getAudioStreamUrl(videoId: string): Promise<string | null> {
+  async getAudioStreamUrl(_videoId: string): Promise<string | null> {
     console.log(`⚠️ YouTube audio disabled - using Deezer 30s previews`)
     
     // Return null to always fall back to Deezer preview
@@ -193,78 +194,6 @@ class YouTubeService {
     console.warn('⚠️ Could not get direct audio stream from any source')
     console.warn('💡 Recommendation: Use a backend service like youtube-dl or yt-dlp')
     console.warn('💡 For now, falling back to Deezer 30s preview')
-    
-    return null
-  }
-
-  /**
-   * Try to get audio stream from Invidious instances
-   */
-  private async tryInvidiousAudioStream(videoId: string): Promise<string | null> {
-    // Try WITHOUT CORS proxy first (faster if it works)
-    for (const instance of INVIDIOUS_INSTANCES) {
-      try {
-        console.log(`🔍 Trying ${instance} without proxy...`)
-        const controller = new AbortController()
-        const timeout = setTimeout(() => controller.abort(), 3000)
-        
-        const response = await fetch(`${instance}/api/v1/videos/${videoId}`, {
-          signal: controller.signal,
-          mode: 'cors'
-        })
-        
-        clearTimeout(timeout)
-
-        if (response.ok) {
-          const data = await response.json()
-          const audioFormats = data.adaptiveFormats?.filter((f: any) => 
-            f.type?.includes('audio') && f.url
-          ) || []
-
-          if (audioFormats.length > 0) {
-            audioFormats.sort((a: any, b: any) => (b.bitrate || 0) - (a.bitrate || 0))
-            console.log(`✅ Got audio from ${instance} (no proxy needed)`)
-            return audioFormats[0].url
-          }
-        }
-      } catch (error) {
-        // Silently continue to next instance
-      }
-    }
-    
-    // Try WITH CORS proxy (slower but might work)
-    for (const instance of INVIDIOUS_INSTANCES) {
-      try {
-        console.log(`🔍 Trying ${instance} with CORS proxy...`)
-        const url = `${CORS_PROXY}${encodeURIComponent(`${instance}/api/v1/videos/${videoId}`)}`
-        
-        const controller = new AbortController()
-        const timeout = setTimeout(() => controller.abort(), 8000)
-        
-        const response = await fetch(url, {
-          signal: controller.signal
-        })
-        
-        clearTimeout(timeout)
-
-        if (response.ok) {
-          const data = await response.json()
-          const audioFormats = data.adaptiveFormats?.filter((f: any) => 
-            f.type?.includes('audio') && f.url
-          ) || []
-
-          if (audioFormats.length > 0) {
-            audioFormats.sort((a: any, b: any) => (b.bitrate || 0) - (a.bitrate || 0))
-            console.log(`✅ Got audio from ${instance} (via proxy)`)
-            return audioFormats[0].url
-          }
-        }
-      } catch (error: any) {
-        if (error.name === 'AbortError') {
-          console.log(`⏱️ ${instance} timed out`)
-        }
-      }
-    }
     
     return null
   }

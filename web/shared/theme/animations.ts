@@ -54,7 +54,7 @@ export const webAnimations = {
     exit: { opacity: 0, y: 20 },
     transition: { 
       duration: durations.normal / 1000,
-      ease: [0.4, 0, 0.2, 1],
+      ease: [0.4, 0, 0.2, 1] as const,
     },
   },
   
@@ -71,7 +71,7 @@ export const webAnimations = {
     exit: { opacity: 0, scale: 0.8 },
     transition: { 
       duration: durations.medium / 1000,
-      ease: [0.68, -0.55, 0.265, 1.55],
+      ease: [0.68, -0.55, 0.265, 1.55] as const,
     },
   },
   
@@ -80,7 +80,7 @@ export const webAnimations = {
     animate: { opacity: 1, scale: 1 },
     transition: { 
       duration: durations.slow / 1000,
-      ease: [0.68, -0.6, 0.32, 1.6],
+      ease: [0.68, -0.6, 0.32, 1.6] as const,
     },
   },
   

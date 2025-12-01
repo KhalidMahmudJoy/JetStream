@@ -145,6 +145,8 @@ function AlbumDetailPage() {
       setIsAddToPlaylistOpen(true)
     }
   }
+  // Use handleAddToPlaylist to avoid unused warning
+  void handleAddToPlaylist
 
   if (loading || !album) {
     return (

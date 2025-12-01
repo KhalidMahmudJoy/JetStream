@@ -48,7 +48,7 @@ function HitsPage() {
     fetchHits()
   }, [])
 
-  const handlePlayTrack = (track: Track, index: number) => {
+  const handlePlayTrack = (track: Track, _index: number) => {
     // Play this track and set up queue with all hits
     playTrack({
       id: track.id,
