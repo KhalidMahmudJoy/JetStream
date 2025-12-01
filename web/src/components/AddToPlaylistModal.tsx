@@ -47,13 +47,16 @@ function AddToPlaylistModal({ isOpen, track, onClose }: AddToPlaylistModalProps)
     if (!track || !newPlaylistName.trim()) return
 
     // Create new playlist
+    console.log('Creating playlist:', newPlaylistName.trim())
     const newPlaylist = storageService.createPlaylist(
       newPlaylistName.trim(),
       newPlaylistDescription.trim()
     )
+    console.log('Playlist created:', newPlaylist)
 
     // Add track to new playlist
     storageService.addTrackToPlaylist(newPlaylist.id, track)
+    console.log('Track added to playlist')
 
     alert(`Created "${newPlaylistName}" and added "${track.title}"`)
     
@@ -61,6 +64,7 @@ function AddToPlaylistModal({ isOpen, track, onClose }: AddToPlaylistModalProps)
     setNewPlaylistName('')
     setNewPlaylistDescription('')
     setIsCreatingNew(false)
+    loadPlaylists()
     onClose()
   }
 

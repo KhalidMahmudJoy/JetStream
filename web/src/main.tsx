@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import './styles/theme-light.css'
 import { registerServiceWorker } from './services/serviceWorker'
 
 // Register service worker for PWA functionality

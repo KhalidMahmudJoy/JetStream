@@ -94,7 +94,19 @@ function AlbumDetailPage() {
 
   const handlePlayTrack = (track: Track) => {
     if (album) {
-      playTrack({
+      // Convert all album tracks to queue format
+      const allTracks = album.tracks.map(t => ({
+        id: t.id,
+        title: t.title,
+        artist: album.artist,
+        albumTitle: album.title,
+        coverImage: album.coverImage,
+        duration: parseInt(t.duration.split(':')[0]) * 60 + parseInt(t.duration.split(':')[1]),
+        audioUrl: t.preview
+      }))
+      
+      // Play the selected track with the full album as queue
+      const currentTrack = {
         id: track.id,
         title: track.title,
         artist: album.artist,
@@ -102,7 +114,9 @@ function AlbumDetailPage() {
         coverImage: album.coverImage,
         duration: parseInt(track.duration.split(':')[0]) * 60 + parseInt(track.duration.split(':')[1]),
         audioUrl: track.preview
-      })
+      }
+      
+      playTrack(currentTrack, allTracks)
     }
   }
 
@@ -119,11 +133,8 @@ function AlbumDetailPage() {
         audioUrl: track.preview
       }))
       
-      // Play first track
-      playTrack(allTracks[0])
-      
-      // Add rest to queue (if queue functionality is available)
-      // addToQueue(allTracks.slice(1))
+      // Play first track with full album as queue
+      playTrack(allTracks[0], allTracks)
     }
   }
 

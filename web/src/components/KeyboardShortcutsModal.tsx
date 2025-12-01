@@ -25,16 +25,16 @@ function KeyboardShortcutsModal({ isOpen, onClose }: KeyboardShortcutsModalProps
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-          />
-
-          {/* Modal */}
-          <motion.div
-            className={styles.modal}
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           >
+            {/* Modal */}
+            <motion.div
+              className={styles.modal}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
             {/* Header */}
             <div className={styles.header}>
               <div className={styles.headerTitle}>
@@ -107,6 +107,7 @@ function KeyboardShortcutsModal({ isOpen, onClose }: KeyboardShortcutsModalProps
             <div className={styles.footer}>
               <p>Press <kbd className={styles.keySmall}>?</kbd> to toggle this help modal</p>
             </div>
+            </motion.div>
           </motion.div>
         </>
       )}

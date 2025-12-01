@@ -31,10 +31,6 @@ function HomePage() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [trendingAlbums, setTrendingAlbums] = useState<Album[]>([])
   const [popularArtists, setPopularArtists] = useState<Artist[]>([])
-  const [bandSongs, setBandSongs] = useState<Album[]>([])
-  const [evergreenSongs, setEvergreenSongs] = useState<Album[]>([])
-  const [nostalgicSongs, setNostalgicSongs] = useState<Album[]>([])
-  const [modernSongs, setModernSongs] = useState<Album[]>([])
   const [madeForYou, setMadeForYou] = useState<Album[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -80,73 +76,7 @@ function HomePage() {
           setPopularArtists(formattedArtists)
         }
 
-        // Fetch Bangladeshi Band Songs (Artcell, Warfaze, Vibe, etc.)
-        console.log('🇧🇩 Fetching Bangladeshi band songs...')
-        const bandResults = await deezerService.search('Artcell Warfaze Bangladesh band rock', 'album', 20)
-        console.log('🇧🇩 Band results:', bandResults)
-        if (bandResults && bandResults.length > 0) {
-          const formattedBands = bandResults.slice(0, 6).map((album: any) => ({
-            id: album.id.toString(),
-            title: album.title,
-            artist: album.artist.name,
-            image: album.cover_big || album.cover_xl || album.cover_medium || 'https://via.placeholder.com/300x300?text=No+Image'
-          }))
-          console.log('✅ Formatted band songs:', formattedBands)
-          setBandSongs(formattedBands)
-        } else {
-          console.log('⚠️ No Bangladeshi band results found')
-        }
 
-        // Fetch Evergreen Bengali Songs
-        console.log('🎵 Fetching evergreen Bengali songs...')
-        const evergreenResults = await deezerService.search('Bengali classic evergreen Kishore Kumar', 'album', 20)
-        console.log('🎵 Evergreen results:', evergreenResults)
-        if (evergreenResults && evergreenResults.length > 0) {
-          const formattedEvergreen = evergreenResults.slice(0, 6).map((album: any) => ({
-            id: album.id.toString(),
-            title: album.title,
-            artist: album.artist.name,
-            image: album.cover_big || album.cover_xl || album.cover_medium || 'https://via.placeholder.com/300x300?text=No+Image'
-          }))
-          console.log('✅ Formatted evergreen songs:', formattedEvergreen)
-          setEvergreenSongs(formattedEvergreen)
-        } else {
-          console.log('⚠️ No evergreen results found')
-        }
-
-        // Fetch Nostalgic Bangladeshi Songs
-        console.log('💭 Fetching nostalgic Bengali songs...')
-        const nostalgicResults = await deezerService.search('Bengali 90s 2000s Habib Warfaze', 'album', 20)
-        console.log('💭 Nostalgic results:', nostalgicResults)
-        if (nostalgicResults && nostalgicResults.length > 0) {
-          const formattedNostalgic = nostalgicResults.slice(0, 6).map((album: any) => ({
-            id: album.id.toString(),
-            title: album.title,
-            artist: album.artist.name,
-            image: album.cover_big || album.cover_xl || album.cover_medium || 'https://via.placeholder.com/300x300?text=No+Image'
-          }))
-          console.log('✅ Formatted nostalgic songs:', formattedNostalgic)
-          setNostalgicSongs(formattedNostalgic)
-        } else {
-          console.log('⚠️ No nostalgic results found')
-        }
-
-        // Fetch Modern Bangladeshi Songs
-        console.log('🎧 Fetching modern Bengali songs...')
-        const modernResults = await deezerService.search('Bengali Arnob Shironamhin Arijit', 'album', 20)
-        console.log('🎧 Modern results:', modernResults)
-        if (modernResults && modernResults.length > 0) {
-          const formattedModern = modernResults.slice(0, 6).map((album: any) => ({
-            id: album.id.toString(),
-            title: album.title,
-            artist: album.artist.name,
-            image: album.cover_big || album.cover_xl || album.cover_medium || 'https://via.placeholder.com/300x300?text=No+Image'
-          }))
-          console.log('✅ Formatted modern songs:', formattedModern)
-          setModernSongs(formattedModern)
-        } else {
-          console.log('⚠️ No modern results found')
-        }
 
         // Fetch "Made For You" - personalized mix of popular genres
         console.log('🎁 Fetching Made For You recommendations...')
@@ -181,10 +111,6 @@ function HomePage() {
         // Set empty arrays instead of staying in loading state
         setTrendingAlbums([])
         setPopularArtists([])
-        setBandSongs([])
-        setEvergreenSongs([])
-        setNostalgicSongs([])
-        setModernSongs([])
         setMadeForYou([])
         setLoading(false)
       }
@@ -309,118 +235,6 @@ function HomePage() {
           ))}
         </div>
       </motion.section>
-
-      {/* Bangladeshi Band Songs Section */}
-      {bandSongs.length > 0 && (
-        <motion.section className={styles.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-          <div className={styles.sectionHeader}>
-            <h2>🇧🇩 Bangladeshi Bands</h2>
-            <Link to="/search?q=Bangladesh+band" className={styles.seeAll}>See all</Link>
-          </div>
-          <div className={styles.horizontalScroll}>
-            {bandSongs.map((album) => (
-              <Link key={album.id} to={`/album/${album.id}`} style={{ textDecoration: 'none' }}>
-                <motion.div className={styles.albumCard} onHoverStart={() => setHoveredItem(`band-${album.id}`)} onHoverEnd={() => setHoveredItem(null)} whileHover={{ y: -4 }}>
-                  <div className={styles.albumImage}>
-                    <img src={album.image} alt={album.title} />
-                    <motion.div className={styles.albumPlay} initial={{ opacity: 0, y: 10 }} animate={{ opacity: hoveredItem === `band-${album.id}` ? 1 : 0, y: hoveredItem === `band-${album.id}` ? 0 : 10 }}>
-                      <Play size={24} fill="currentColor" />
-                    </motion.div>
-                  </div>
-                  <div className={styles.albumInfo}>
-                    <div className={styles.albumTitle}>{album.title}</div>
-                    <div className={styles.albumArtist}>{album.artist}</div>
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Evergreen Bengali Songs Section */}
-      {evergreenSongs.length > 0 && (
-        <motion.section className={styles.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
-          <div className={styles.sectionHeader}>
-            <h2>🎵 Evergreen Bengali Hits</h2>
-            <Link to="/search?q=Bengali+classic+evergreen" className={styles.seeAll}>See all</Link>
-          </div>
-          <div className={styles.horizontalScroll}>
-            {evergreenSongs.map((album) => (
-              <Link key={album.id} to={`/album/${album.id}`} style={{ textDecoration: 'none' }}>
-                <motion.div className={styles.albumCard} onHoverStart={() => setHoveredItem(`evergreen-${album.id}`)} onHoverEnd={() => setHoveredItem(null)} whileHover={{ y: -4 }}>
-                  <div className={styles.albumImage}>
-                    <img src={album.image} alt={album.title} />
-                    <motion.div className={styles.albumPlay} initial={{ opacity: 0, y: 10 }} animate={{ opacity: hoveredItem === `evergreen-${album.id}` ? 1 : 0, y: hoveredItem === `evergreen-${album.id}` ? 0 : 10 }}>
-                      <Play size={24} fill="currentColor" />
-                    </motion.div>
-                  </div>
-                  <div className={styles.albumInfo}>
-                    <div className={styles.albumTitle}>{album.title}</div>
-                    <div className={styles.albumArtist}>{album.artist}</div>
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Nostalgic Bengali Songs Section */}
-      {nostalgicSongs.length > 0 && (
-        <motion.section className={styles.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}>
-          <div className={styles.sectionHeader}>
-            <h2>💭 Nostalgic Bengali Songs</h2>
-            <Link to="/search?q=Bengali+90s+2000s+nostalgic" className={styles.seeAll}>See all</Link>
-          </div>
-          <div className={styles.horizontalScroll}>
-            {nostalgicSongs.map((album) => (
-              <Link key={album.id} to={`/album/${album.id}`} style={{ textDecoration: 'none' }}>
-                <motion.div className={styles.albumCard} onHoverStart={() => setHoveredItem(`nostalgic-${album.id}`)} onHoverEnd={() => setHoveredItem(null)} whileHover={{ y: -4 }}>
-                  <div className={styles.albumImage}>
-                    <img src={album.image} alt={album.title} />
-                    <motion.div className={styles.albumPlay} initial={{ opacity: 0, y: 10 }} animate={{ opacity: hoveredItem === `nostalgic-${album.id}` ? 1 : 0, y: hoveredItem === `nostalgic-${album.id}` ? 0 : 10 }}>
-                      <Play size={24} fill="currentColor" />
-                    </motion.div>
-                  </div>
-                  <div className={styles.albumInfo}>
-                    <div className={styles.albumTitle}>{album.title}</div>
-                    <div className={styles.albumArtist}>{album.artist}</div>
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Modern Bengali Songs Section */}
-      {modernSongs.length > 0 && (
-        <motion.section className={styles.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
-          <div className={styles.sectionHeader}>
-            <h2>🎧 Modern Bengali Hits</h2>
-            <Link to="/search?q=Bengali+modern+2024+2025" className={styles.seeAll}>See all</Link>
-          </div>
-          <div className={styles.horizontalScroll}>
-            {modernSongs.map((album) => (
-              <Link key={album.id} to={`/album/${album.id}`} style={{ textDecoration: 'none' }}>
-                <motion.div className={styles.albumCard} onHoverStart={() => setHoveredItem(`modern-${album.id}`)} onHoverEnd={() => setHoveredItem(null)} whileHover={{ y: -4 }}>
-                  <div className={styles.albumImage}>
-                    <img src={album.image} alt={album.title} />
-                    <motion.div className={styles.albumPlay} initial={{ opacity: 0, y: 10 }} animate={{ opacity: hoveredItem === `modern-${album.id}` ? 1 : 0, y: hoveredItem === `modern-${album.id}` ? 0 : 10 }}>
-                      <Play size={24} fill="currentColor" />
-                    </motion.div>
-                  </div>
-                  <div className={styles.albumInfo}>
-                    <div className={styles.albumTitle}>{album.title}</div>
-                    <div className={styles.albumArtist}>{album.artist}</div>
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
-          </div>
-        </motion.section>
-      )}
 
       {/* Made For You Section - Personalized Recommendations */}
       {madeForYou.length > 0 && (

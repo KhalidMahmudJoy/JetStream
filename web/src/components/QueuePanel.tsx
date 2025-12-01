@@ -6,7 +6,18 @@
 import { motion, AnimatePresence, Reorder } from 'framer-motion'
 import { X, Music, Trash2, Play, GripVertical } from 'lucide-react'
 import { usePlayer } from '../contexts/PlayerContext'
+import { useState, useEffect } from 'react'
 import styles from './QueuePanel.module.css'
+
+interface Track {
+  id: string
+  title: string
+  artist: string
+  albumTitle: string
+  coverImage: string
+  duration: number
+  audioUrl: string
+}
 
 interface QueuePanelProps {
   isOpen: boolean
@@ -14,16 +25,17 @@ interface QueuePanelProps {
 }
 
 function QueuePanel({ isOpen, onClose }: QueuePanelProps) {
-  const { queue, currentTrack, playTrack, clearQueue, reorderQueue } = usePlayer()
+  const { queue, currentTrack, playTrack, clearQueue, setQueue } = usePlayer()
+  const [localQueue, setLocalQueue] = useState<Track[]>([])
 
-  const handleReorder = (newQueue: any[]) => {
-    // Calculate the indices difference
-    newQueue.forEach((track, newIndex) => {
-      const oldIndex = queue.findIndex(t => t.id === track.id)
-      if (oldIndex !== -1 && oldIndex !== newIndex) {
-        reorderQueue(oldIndex, newIndex)
-      }
-    })
+  // Sync local queue with global queue
+  useEffect(() => {
+    setLocalQueue([...queue])
+  }, [queue])
+
+  const handleReorder = (reorderedQueue: Track[]) => {
+    setLocalQueue(reorderedQueue)
+    setQueue(reorderedQueue)
   }
 
   const formatDuration = (seconds: number) => {
@@ -65,11 +77,11 @@ function QueuePanel({ isOpen, onClose }: QueuePanelProps) {
                 <Music size={20} />
                 <h2>Queue</h2>
                 <span className={styles.count}>
-                  {queue.length} {queue.length === 1 ? 'track' : 'tracks'}
+                  {localQueue.length} {localQueue.length === 1 ? 'track' : 'tracks'}
                 </span>
               </div>
               <div className={styles.headerActions}>
-                {queue.length > 0 && (
+                {localQueue.length > 0 && (
                   <button
                     className={styles.clearButton}
                     onClick={handleClearQueue}
@@ -110,7 +122,7 @@ function QueuePanel({ isOpen, onClose }: QueuePanelProps) {
 
             {/* Queue List */}
             <div className={styles.queueList}>
-              {queue.length === 0 ? (
+              {localQueue.length === 0 ? (
                 <div className={styles.emptyState}>
                   <Music size={48} />
                   <p>No tracks in queue</p>
@@ -121,20 +133,24 @@ function QueuePanel({ isOpen, onClose }: QueuePanelProps) {
                   <div className={styles.upNextLabel}>Up Next • Drag to reorder</div>
                   <Reorder.Group
                     axis="y"
-                    values={queue}
+                    values={localQueue}
                     onReorder={handleReorder}
+                    as="ul"
                     style={{ listStyle: 'none', padding: 0, margin: 0 }}
                   >
-                    {queue.map((track, index) => (
+                    {localQueue.map((track, index) => (
                       <Reorder.Item
-                        key={`${track.id}-${index}`}
+                        key={track.id}
                         value={track}
+                        as="li"
                         className={styles.queueItem}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
-                        whileDrag={{ scale: 1.05, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
+                        style={{ listStyle: 'none' }}
+                        whileDrag={{ 
+                          scale: 1.02, 
+                          boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                          backgroundColor: 'rgba(30, 215, 96, 0.15)',
+                          zIndex: 999
+                        }}
                       >
                         <div className={styles.dragHandle}>
                           <GripVertical size={16} />
@@ -154,7 +170,10 @@ function QueuePanel({ isOpen, onClose }: QueuePanelProps) {
                         </div>
                         <button
                           className={styles.playNowButton}
-                          onClick={() => playTrack(track)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            playTrack(track)
+                          }}
                           title="Play now"
                         >
                           <Play size={14} fill="currentColor" />

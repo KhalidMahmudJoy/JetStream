@@ -1,0 +1,88 @@
+/* Light Theme Styles */
+:root[data-theme="light"] {
+  /* Primary Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f7;
+  --color-bg-tertiary: #e8e8ed;
+  --color-bg-hover: #f0f0f5;
+  
+  /* Text Colors */
+  --color-text-primary: #1d1d1f;
+  --color-text-secondary: #515154;
+  --color-text-tertiary: #86868b;
+  
+  /* Accent Colors */
+  --color-accent: #007aff;
+  --color-accent-hover: #0051d5;
+  --color-accent-light: rgba(0, 122, 255, 0.1);
+  
+  /* Border Colors */
+  --color-border: #d2d2d7;
+  --color-border-light: #e5e5ea;
+  
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.4);
+  
+  /* Shadow */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+  
+  /* Player Bar */
+  --player-bg: #f5f5f7;
+  --player-progress: #007aff;
+  --player-progress-bg: #d2d2d7;
+  
+  /* Sidebar/Nav */
+  --nav-bg: #ffffff;
+  --nav-text: #515154;
+  --nav-active: #007aff;
+  --nav-hover-bg: #f0f0f5;
+  
+  /* Cards */
+  --card-bg: #ffffff;
+  --card-hover: #f5f5f7;
+  
+  /* Buttons */
+  --button-primary-bg: #007aff;
+  --button-primary-hover: #0051d5;
+  --button-secondary-bg: #e8e8ed;
+  --button-secondary-hover: #d2d2d7;
+  
+  /* Input */
+  --input-bg: #f5f5f7;
+  --input-border: #d2d2d7;
+  --input-focus: #007aff;
+  
+  /* Modal */
+  --modal-bg: #ffffff;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+}
+
+/* Light theme specific adjustments */
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="light"] body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Fix visualizer for light theme */
+[data-theme="light"] canvas {
+  mix-blend-mode: multiply;
+}
+
+/* Scrollbar for light theme */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}

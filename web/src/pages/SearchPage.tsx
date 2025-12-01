@@ -8,7 +8,7 @@ import { Search, X, TrendingUp, Clock, Music, Mic2, Disc3, Play, Plus } from 'lu
 import { Link } from 'react-router-dom'
 import { deezerService } from '../services/deezer.service'
 import { usePlayer } from '../contexts/PlayerContext'
-import { webAnimations } from '../../../shared/theme/animations'
+import { webAnimations } from '../../shared/theme/animations'
 import AddToPlaylistModal from '../components/AddToPlaylistModal'
 import styles from './SearchPage.module.css'
 

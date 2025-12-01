@@ -8,16 +8,19 @@ import { BrowserRouter } from 'react-router-dom'
 import { store } from './store'
 import AppRouter from './router/AppRouter'
 import { PlayerProvider } from './contexts/PlayerContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 import { OfflineIndicator } from './components/OfflineIndicator'
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <PlayerProvider>
-          <OfflineIndicator />
-          <AppRouter />
-        </PlayerProvider>
+        <ThemeProvider>
+          <PlayerProvider>
+            <OfflineIndicator />
+            <AppRouter />
+          </PlayerProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   )

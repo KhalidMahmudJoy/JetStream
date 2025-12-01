@@ -60,11 +60,14 @@ function LibraryPage() {
 
   const handleCreatePlaylist = () => {
     if (newPlaylistName.trim()) {
-      storageService.createPlaylist(newPlaylistName.trim(), newPlaylistDesc.trim())
+      console.log('Creating playlist:', newPlaylistName.trim())
+      const newPlaylist = storageService.createPlaylist(newPlaylistName.trim(), newPlaylistDesc.trim())
+      console.log('Playlist created:', newPlaylist)
       setNewPlaylistName('')
       setNewPlaylistDesc('')
       setShowCreatePlaylist(false)
       loadData()
+      console.log('Playlists after creation:', storageService.getPlaylists())
     }
   }
 
