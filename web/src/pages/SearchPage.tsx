@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, X, TrendingUp, Clock, Music, Mic2, Disc3, Play, Plus } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { deezerService } from '../services/deezer.service'
 import { usePlayer } from '../contexts/PlayerContext'
 import { webAnimations } from '../../shared/theme/animations'
@@ -26,7 +26,10 @@ interface SearchResults {
 }
 
 function SearchPage() {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchParams] = useSearchParams()
+  const initialQuery = searchParams.get('q') || ''
+  
+  const [searchQuery, setSearchQuery] = useState(initialQuery)
   const [activeFilter, setActiveFilter] = useState<FilterType>('all')
   const [searchResults, setSearchResults] = useState<SearchResults | null>(null)
   const [isSearching, setIsSearching] = useState(false)
@@ -69,6 +72,14 @@ function SearchPage() {
   useEffect(() => {
     localStorage.setItem('recentSearches', JSON.stringify(recentSearches))
   }, [recentSearches])
+
+  // Update search query when URL parameter changes (e.g., from home page quick picks)
+  useEffect(() => {
+    const urlQuery = searchParams.get('q')
+    if (urlQuery && urlQuery !== searchQuery) {
+      setSearchQuery(urlQuery)
+    }
+  }, [searchParams])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
