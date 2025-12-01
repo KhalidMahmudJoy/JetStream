@@ -17,7 +17,6 @@ interface Track {
 
 function HitsPage() {
   const [globalHits, setGlobalHits] = useState<Track[]>([])
-  const [bangladeshiHits, setBangladeshiHits] = useState<Track[]>([])
   const [loading, setLoading] = useState(true)
   const [hoveredTrack, setHoveredTrack] = useState<string | null>(null)
   const { playTrack } = usePlayer()
@@ -30,21 +29,11 @@ function HitsPage() {
         // Fetch Global Hit Songs from Deezer Chart
         const globalTracks = await deezerService.getChart('tracks', 50)
         if (globalTracks && globalTracks.length > 0) {
-          const formattedGlobal = globalTracks.slice(0, 20).map((track: any) => 
+          const formattedGlobal = globalTracks.slice(0, 50).map((track: any) => 
             deezerService.transformTrack(track)
           )
           setGlobalHits(formattedGlobal)
           console.log('🌍 Global hits loaded:', formattedGlobal.length)
-        }
-
-        // Fetch Bangladeshi Hit Songs
-        const bdResults = await deezerService.search('Bangladesh Artcell Warfaze Habib Arnob Arijit', 'track', 50)
-        if (bdResults && bdResults.length > 0) {
-          const formattedBD = bdResults.slice(0, 20).map((track: any) => 
-            deezerService.transformTrack(track)
-          )
-          setBangladeshiHits(formattedBD)
-          console.log('🇧🇩 Bangladeshi hits loaded:', formattedBD.length)
         }
 
         setLoading(false)
@@ -52,7 +41,6 @@ function HitsPage() {
       } catch (error) {
         console.error('❌ Error fetching hits:', error)
         setGlobalHits([])
-        setBangladeshiHits([])
         setLoading(false)
       }
     }
@@ -60,7 +48,8 @@ function HitsPage() {
     fetchHits()
   }, [])
 
-  const handlePlayTrack = (track: Track) => {
+  const handlePlayTrack = (track: Track, index: number) => {
+    // Play this track and set up queue with all hits
     playTrack({
       id: track.id,
       title: track.title,
@@ -69,7 +58,7 @@ function HitsPage() {
       coverImage: track.coverImage,
       duration: track.duration,
       audioUrl: track.audioUrl
-    })
+    }, globalHits)
   }
 
   const formatDuration = (seconds: number) => {
@@ -107,7 +96,7 @@ function HitsPage() {
           <p className={styles.headerLabel}>Trending Now</p>
           <h1 className={styles.headerTitle}>Top Hits</h1>
           <p className={styles.headerSubtitle}>
-            Global chart-toppers and Bangladeshi favorites
+            Global chart-toppers and trending tracks
           </p>
         </div>
       </motion.div>
@@ -134,7 +123,7 @@ function HitsPage() {
               transition={{ delay: 0.3 + index * 0.02 }}
               onHoverStart={() => setHoveredTrack(`global-${track.id}`)}
               onHoverEnd={() => setHoveredTrack(null)}
-              onClick={() => handlePlayTrack(track)}
+              onClick={() => handlePlayTrack(track, index)}
             >
               <div className={styles.trackNumber}>
                 {hoveredTrack === `global-${track.id}` ? (
@@ -165,58 +154,7 @@ function HitsPage() {
         </div>
       </motion.section>
 
-      {/* Bangladeshi Hits Section */}
-      <motion.section
-        className={styles.section}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-      >
-        <div className={styles.sectionHeader}>
-          <h2>🇧🇩 Bangladeshi Hits</h2>
-          <span className={styles.trackCount}>{bangladeshiHits.length} tracks</span>
-        </div>
 
-        <div className={styles.trackList}>
-          {bangladeshiHits.map((track, index) => (
-            <motion.div
-              key={track.id}
-              className={styles.trackItem}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 + index * 0.02 }}
-              onHoverStart={() => setHoveredTrack(`bd-${track.id}`)}
-              onHoverEnd={() => setHoveredTrack(null)}
-              onClick={() => handlePlayTrack(track)}
-            >
-              <div className={styles.trackNumber}>
-                {hoveredTrack === `bd-${track.id}` ? (
-                  <motion.div
-                    className={styles.playIcon}
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                  >
-                    <Play size={16} fill="currentColor" />
-                  </motion.div>
-                ) : (
-                  <span>{index + 1}</span>
-                )}
-              </div>
-              <div className={styles.trackImage}>
-                <img src={track.coverImage} alt={track.title} />
-              </div>
-              <div className={styles.trackInfo}>
-                <div className={styles.trackTitle}>{track.title}</div>
-                <div className={styles.trackArtist}>{track.artist}</div>
-              </div>
-              <div className={styles.trackAlbum}>{track.albumTitle}</div>
-              <div className={styles.trackDuration}>
-                {formatDuration(track.duration)}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
     </div>
   )
 }

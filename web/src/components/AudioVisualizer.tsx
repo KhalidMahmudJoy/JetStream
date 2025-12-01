@@ -9,60 +9,13 @@ type VisualizerType = 'bars' | 'wave' | 'circle'
 export const AudioVisualizer: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
-  const audioContextRef = useRef<AudioContext | null>(null)
-  const analyserRef = useRef<AnalyserNode | null>(null)
-  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null)
-  const [isInitialized, setIsInitialized] = useState(false)
   const [visualizerType, setVisualizerType] = useState<VisualizerType>('bars')
   
-  const { isPlaying, currentTrack } = usePlayer()
-
-  // Initialize Web Audio API
-  useEffect(() => {
-    if (!currentTrack || isInitialized) return
-
-    const initAudioContext = () => {
-      try {
-        // Get the audio element from the document
-        const audioElement = document.querySelector('audio')
-        if (!audioElement) return
-
-        // Create audio context
-        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-        audioContextRef.current = audioContext
-
-        // Create analyser
-        const analyser = audioContext.createAnalyser()
-        analyser.fftSize = 256
-        analyserRef.current = analyser
-
-        // Create source from audio element
-        if (!sourceRef.current) {
-          const source = audioContext.createMediaElementSource(audioElement)
-          sourceRef.current = source
-          source.connect(analyser)
-          analyser.connect(audioContext.destination)
-        }
-
-        setIsInitialized(true)
-      } catch (error) {
-        console.error('Error initializing audio context:', error)
-      }
-    }
-
-    // Delay initialization to ensure audio element exists
-    setTimeout(initAudioContext, 500)
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-    }
-  }, [currentTrack, isInitialized])
+  const { isPlaying, analyserNode } = usePlayer()
 
   // Draw visualizer
   useEffect(() => {
-    if (!isPlaying || !isInitialized || !analyserRef.current || !canvasRef.current) {
+    if (!isPlaying || !analyserNode || !canvasRef.current) {
       return
     }
 
@@ -70,7 +23,7 @@ export const AudioVisualizer: React.FC = () => {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const analyser = analyserRef.current
+    const analyser = analyserNode
     const bufferLength = analyser.frequencyBinCount
     const dataArray = new Uint8Array(bufferLength)
 
@@ -106,7 +59,7 @@ export const AudioVisualizer: React.FC = () => {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [isPlaying, isInitialized, visualizerType])
+  }, [isPlaying, analyserNode, visualizerType])
 
   const drawBars = (
     ctx: CanvasRenderingContext2D,

@@ -3,17 +3,16 @@
  */
 
 import { motion } from 'framer-motion'
-import { Bell, Volume2, Shield, Palette, Music2, Info, Trash2, Database } from 'lucide-react'
+import { Bell, Volume2, Shield, Music2, Info, Trash2 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { apiCacheService } from '../services/apiCache.service'
+import { usePlayer } from '../contexts/PlayerContext'
 import styles from './SettingsPage.module.css'
 
 interface Settings {
   notifications: boolean
   autoPlay: boolean
   audioQuality: 'low' | 'medium' | 'high'
-  theme: 'dark' | 'light' | 'auto'
-  language: string
   privateProfile: boolean
   explicitContent: boolean
   crossfade: number
@@ -28,8 +27,6 @@ const defaultSettings: Settings = {
   notifications: true,
   autoPlay: true,
   audioQuality: 'high',
-  theme: 'dark',
-  language: 'en',
   privateProfile: false,
   explicitContent: true,
   crossfade: 0,
@@ -41,6 +38,7 @@ const defaultSettings: Settings = {
 function SettingsPage() {
   const [settings, setSettings] = useState<Settings>(defaultSettings)
   const [cacheSize, setCacheSize] = useState('0')
+  const { setEqualizerPreset } = usePlayer()
 
   useEffect(() => {
     // Load settings from localStorage
@@ -217,70 +215,27 @@ function SettingsPage() {
               <select
                 className={styles.select}
                 value={settings.equalizerPreset}
-                onChange={(e) => updateSetting('equalizerPreset', e.target.value)}
+                onChange={(e) => {
+                  const preset = e.target.value
+                  setEqualizerPreset(preset)
+                  updateSetting('equalizerPreset', preset)
+                }}
               >
                 <option value="off">Off</option>
-                <option value="flat">Flat</option>
+                <option value="bass-boost">Bass Boost</option>
+                <option value="treble-boost">Treble Boost</option>
+                <option value="vocal">Vocal</option>
                 <option value="pop">Pop</option>
                 <option value="rock">Rock</option>
                 <option value="jazz">Jazz</option>
                 <option value="classical">Classical</option>
-                <option value="bass-boost">Bass Boost</option>
-                <option value="treble-boost">Treble Boost</option>
+                <option value="electronic">Electronic</option>
               </select>
             </div>
           </div>
         </motion.section>
 
-        {/* Appearance Settings */}
-        <motion.section
-          className={styles.card}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className={styles.cardTitle}>
-            <Palette size={20} />
-            Appearance
-          </h2>
-          
-          <div className={styles.settingsList}>
-            <div className={styles.settingItem}>
-              <div className={styles.settingInfo}>
-                <div className={styles.settingLabel}>Theme</div>
-                <div className={styles.settingDesc}>Choose your theme</div>
-              </div>
-              <select
-                className={styles.select}
-                value={settings.theme}
-                onChange={(e) => updateSetting('theme', e.target.value as 'dark' | 'light' | 'auto')}
-              >
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
-                <option value="auto">Auto (System)</option>
-              </select>
-            </div>
 
-            <div className={styles.settingItem}>
-              <div className={styles.settingInfo}>
-                <div className={styles.settingLabel}>Language</div>
-                <div className={styles.settingDesc}>Interface language</div>
-              </div>
-              <select
-                className={styles.select}
-                value={settings.language}
-                onChange={(e) => updateSetting('language', e.target.value)}
-              >
-                <option value="en">English</option>
-                <option value="bn">বাংলা (Bengali)</option>
-                <option value="es">Español</option>
-                <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="hi">हिन्दी (Hindi)</option>
-              </select>
-            </div>
-          </div>
-        </motion.section>
 
         {/* Notifications */}
         <motion.section

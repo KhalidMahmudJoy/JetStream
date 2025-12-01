@@ -159,12 +159,12 @@ function Layout() {
             >
               <Keyboard size={20} />
             </button>
-            <button className={styles.actionButton}>
+            <Link to="/library" className={styles.actionButton} title="Liked Songs">
               <Heart size={20} />
-            </button>
-            <button className={styles.actionButton}>
+            </Link>
+            <Link to="/profile" className={styles.actionButton} title="Profile">
               <User size={20} />
-            </button>
+            </Link>
           </div>
         </div>
       </nav>
